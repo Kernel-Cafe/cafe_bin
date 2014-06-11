@@ -14,7 +14,7 @@
 $KCLEAN=1
 source bin/setup.sh
 fpath=`echo $1 | sed  's/_/\//g'`
-fpath="devices/$fpath/cafe_device.sh"
+fpath="device/$fpath/cafe_device.sh"
 source $fpath
 prepare
 print_config
