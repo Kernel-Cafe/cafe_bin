@@ -26,7 +26,6 @@ fi
 nice -n 10 make -j$KTHREAD -C $KERNEL_SOURCE O=$KERNEL_OUT ARCH=arm CROSS_COMPILE="$CC" LOCALVERSION="-MAXMOD" $KERNEL_CONFIG || exit 1
 #make -C $KERNEL_DIR O=$KERNEL_OUT ARCH=arm CROSS_COMPILE="$CC" $K_CONFIG xconfig
 nice -n 10 make -j$KTHREAD  -C $KERNEL_SOURCE O=$KERNEL_OUT ARCH=arm CROSS_COMPILE="$CC" LOCALVERSION="-MAXMOD" || exit 1
-echo no way
 nice -n 10 make -j$KTHREAD  -C $KERNEL_SOURCE O=$KERNEL_OUT ARCH=arm CROSS_COMPILE="$CC" INSTALL_MOD_PATH=$MOD_DIR modules_install || echo  1
 mdpath=`find $MOD_DIR -type f -name modules.order`;\
 if [ "$$mdpath" != "" ];then\
