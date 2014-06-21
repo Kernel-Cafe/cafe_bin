@@ -20,6 +20,7 @@ prepare() {
   mkdir -p $DEVICE_OUT/modules
   mkdir -p $DEVICE_OUT/modules_stripped
   mkdir -p $DEVICE_OUT/package
+  mkdir -p $DEVICE_OUT/ramdisk
   KERNEL_OUT=$DEVICE_OUT/kout
   MOD_DIR=$DEVICE_OUT/modules
   PKG_ZIP=$DEVICE_OUT/$DEVICE_NAME-`date +%Y%m%d`.zip
@@ -40,13 +41,16 @@ prepare() {
   export DIST_ZIP
 }
 print_config(){
-  echo "KERNEL_SOURCE $KERNEL_SOURCE"
-  echo "KERNEL_OUT $KERNEL_OUT"
-  echo "CC $CC"
-  echo "KERNEL_CONFIG $KERNEL_CONFIG"
-  echo "DEVICE_NAME $DEVICE_NAME"
-  echo "MOD_DIR $MOD_DIR"
-  
+  printf "\n\n\e[31m*************************************************************************\n"
+  printf "*\t\t\t\\t\e[34m Cafe Configuration\t\t\t\e[31m*\n"
+  printf "\e[31m*************************************************************************\n\n\n"
+  printf "\e[32mKERNEL_SOURCE \t\e[35m$KERNEL_SOURCE\n"
+  printf "\e[32mKERNEL_OUT \t\e[35m$KERNEL_OUT\n"
+  printf "\e[32mCC \t\t\e[35m$CC\n"
+  printf "\e[32mKERNEL_CONFIG \t\e[35m$KERNEL_CONFIG\n"
+  printf "\e[32mDEVICE_NAME \t\e[35m$DEVICE_NAME\n"
+  printf "\e[32mMOD_DIR \t\e[35m$MOD_DIR\n"
+  echo -e "\033[0m"
 }
 
 build_kernel(){
@@ -64,13 +68,13 @@ make_dist(){
 print_finals(){
   if [ -e "$DIST_ZIP" ]
   then
-    echo kitchen dist : $DIST_ZIP
+    echo -e "\033[31mkitchen dist \t\t\033[35m$DIST_ZIP"
   else
     echo No kitchen dist
   fi
   if [ -e $PKG_ZIP ]
   then
-    echo package dist : $PKG_ZIP
+    echo -e "\033[31mpackage dist \t\t\033[35m$PKG_ZIP"
   else
     echo No package dist
   fi
