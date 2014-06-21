@@ -5,10 +5,11 @@ cleanup(){
   rm $DEVICE_OUT/initrd.img 2> /dev/null
 }
 ramdisk_default(){
-  $BIN_ROOT/mkbootfs $DEV_ROOT/img/ramdisk > $DEVICE_OUT/ramdisk.cpio || exit 1
+  $BIN_ROOT/mkbootfs $DEVICE_OUT/ramdisk > $DEVICE_OUT/ramdisk.cpio || exit 1
   cat $DEVICE_OUT/ramdisk.cpio | gzip > $DEVICE_OUT/ramdisk.cpio.gz || exit 1
 }
 cp -R $DEV_ROOT/img/ota/* $DEVICE_OUT/package
+cp -R $DEV_ROOT/img/ramdisk/* $DEVICE_OUT/ramdisk
 ME_ROOT="$DEVICE_OUT/package"
 
 #rm $ME_ROOT/ota/system/lib/modules/*
@@ -35,9 +36,9 @@ else
   ramdisk_default
   cp $KERNEL_OUT/arch/arm/boot/zImage $DEVICE_OUT/zImage || exit 1
   $CM
-  if [[ -z "$KERNEL_CMDLINE" ]] 
+  if [[  "$KERNEL_CMDLINE" ]] 
   then
-    CM=" --cmdline $KERNEL_CMDLINE"	
+    CM=" --cmdline $KERNEL_CMDLINE"
   fi
   $BIN_ROOT/mkbootimg $CM --kernel $DEVICE_OUT/zImage --ramdisk $DEVICE_OUT/ramdisk.cpio.gz -o $ME_ROOT/boot.img || exit 1
 fi
